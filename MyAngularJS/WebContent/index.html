@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html data-ng-app="myApp">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>My AngularJS</title>
+		<script src="scripts/angular.js"></script>
+		<script src="scripts/myController.js"></script>
+		<style>
+			table {
+				font-family: arial, sans-serif;
+				border-collapse: collapse;
+				width: 100%;
+			}
+			td, th {
+				border: 1px solid #dddddd;
+				text-align: left;
+				padding: 8px;
+			}
+			tr:nth-child(even) {
+				background-color: #dddddd;
+			}
+		</style>
+	</head>
+	<body data-ng-controller="ctrl">
+		<div>
+			First Name : {{employee.firstName}}
+		</div>
+		<div>
+			Last Name : {{employee.lastName}}
+		</div>
+		<div>
+			Gender : {{employee.gender}}
+		</div>
+		
+		<div>
+			Name : {{country.name}}
+		</div>
+		<div>
+			Capital : {{country.capital}}
+		</div>
+		<div>
+			<!-- This will cause a 404 error because as soon as the DOM is parsed, an attempt is made
+			to fetch the image from the server.  At this point, AngularJS binding expression that is 
+			specified with the src attribute is not evaluated.  Hence 404 (not found) error. Then a 
+			second request is sent after the binding expression is evaluated, thus, it display the flag. -->
+<!--		<img src="{{country.flag}}"
+				 alt="{{country.name + 'Flag'}}" 
+				 style="height:100px; width:200px"/>  -->
+			
+			<!--  To fix the 404 error use the ng-src directive: ng-src attribute ensures that a request
+			is issued only after AngularJS has evaluated the binding expression. -->
+			<img data-ng-src="{{country.flag}}"
+				 alt="{{country.name + ' Flag'}}" 
+				 style="height:100px; width:200px"/>
+		</div>
+		<div>
+			<input type="text" data-ng-model="testMsg" />
+			<br/>
+			<br/>
+			{{testMsg}}  <!-- ng-model directive (can be use with input, select, textarea) references to testMsg defined in the controller scope object -->
+						 <!-- Binding expression updates the view when the model changes {{message}} -->
+						 <!-- ng-model directive updates the model when the view changes -->
+			<br/>
+			<br/>
+		</div>
+		<div>
+			<input type="text" data-ng-model="modelinView" />
+			<br/>
+			<br/>
+			{{modelinView}}  <!-- This references the new model created above in the view. -->
+			<br/>
+			<br/>
+		</div>
+		
+		<table>
+			<tr> 
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Gender</th>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" data-ng-model="employee.firstName"/>
+				</td>
+				<td>
+					<input type="text" data-ng-model="employee.lastName"/>
+				</td>
+				<td>
+					<input type="text" data-ng-model="employee.gender"/>
+				</td>
+			</tr>
+		</table>
+		<br/>
+		<table>
+			<tr> 
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Gender</th>
+			</tr>
+			<tr>
+				<td>
+					{{employee.firstName}}
+				</td>
+				<td>
+					{{employee.lastName}}
+				</td>
+				<td>
+					{{employee.gender}}
+				</td>
+			</tr>
+		</table>
+		<br/>
+		<br/>
+		<h1>Login Form</h1><hr>
+		<form action="next.html" data-ng-submit="function1($event)">
+			UserName: <input name="username" data-ng-model="un"><div style="color: red">{{msg1}}</div><br>
+			PassWord: <input type="password" name="pwd" data-ng-model="pw"><div style="color: red">{{msg2}}</div><br>
+			<input type="submit" value="login">
+		</form>
+	</body>
+</html>
